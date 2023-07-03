@@ -14,53 +14,55 @@ const Ingredients = () => {
     console.log('RENDERING INGREDIENTS', userIngredients);
   }, [userIngredients]);
 
-  const filteredIngredientsHandler = useCallback(filteredIngredients => {
+  const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     setUserIngredients(filteredIngredients);
   }, []);
 
-  const addIngredientHandler = ingredient => {
+  const addIngredientHandler = (ingredient) => {
     setIsLoading(true);
     fetch('https://react-hooks-update.firebaseio.com/ingredients.json', {
       method: 'POST',
       body: JSON.stringify(ingredient),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     })
-      .then(response => {
+      .then((response) => {
         setIsLoading(false);
         return response.json();
       })
-      .then(responseData => {
-        setUserIngredients(prevIngredients => [
+      .then((responseData) => {
+        setUserIngredients((prevIngredients) => [
           ...prevIngredients,
-          { id: responseData.name, ...ingredient }
+          { id: responseData.name, ...ingredient },
         ]);
       });
   };
 
-  const removeIngredientHandler = ingredientId => {
+  const removeIngredientHandler = (ingredientId) => {
     setIsLoading(true);
     fetch(
       `https://react-hooks-update.firebaseio.com/ingredients/${ingredientId}.jon`,
       {
-        method: 'DELETE'
+        method: 'DELETE',
       }
-    ).then(response => {
-      setIsLoading(false);
-      setUserIngredients(prevIngredients =>
-        prevIngredients.filter(ingredient => ingredient.id !== ingredientId)
-      );
-    }).catch(error => {
-      setError('Something went wrong!');
-      setIsLoading(false);
-    });
+    )
+      .then((response) => {
+        setIsLoading(false);
+        setUserIngredients((prevIngredients) =>
+          prevIngredients.filter((ingredient) => ingredient.id !== ingredientId)
+        );
+      })
+      .catch((error) => {
+        setError('Something went wrong!');
+        setIsLoading(false);
+      });
   };
 
   const clearError = () => {
     setError(null);
-  }
+  };
 
   return (
-    <div className="App">
+    <div className='App'>
       {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
 
       <IngredientForm
