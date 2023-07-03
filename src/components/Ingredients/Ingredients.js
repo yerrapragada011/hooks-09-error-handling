@@ -20,11 +20,14 @@ const Ingredients = () => {
 
   const addIngredientHandler = (ingredient) => {
     setIsLoading(true);
-    fetch('https://react-hooks-update.firebaseio.com/ingredients.json', {
-      method: 'POST',
-      body: JSON.stringify(ingredient),
-      headers: { 'Content-Type': 'application/json' },
-    })
+    fetch(
+      'https://react-hooks-update-e8923-default-rtdb.firebaseio.com/ingredients.json',
+      {
+        method: 'POST',
+        body: JSON.stringify(ingredient),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
       .then((response) => {
         setIsLoading(false);
         return response.json();
@@ -40,7 +43,7 @@ const Ingredients = () => {
   const removeIngredientHandler = (ingredientId) => {
     setIsLoading(true);
     fetch(
-      `https://react-hooks-update.firebaseio.com/ingredients/${ingredientId}.jon`,
+      `https://react-hooks-update-e8923-default-rtdb.firebaseio.com/ingredients/${ingredientId}.jon`,
       {
         method: 'DELETE',
       }
